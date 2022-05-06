@@ -1,6 +1,5 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/c++,java,linux,macos,gradle,windows,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=c++,java,linux,macos,gradle,windows,visualstudiocode
+# This gitignore has been specially created by the WPILib team.
+# If you remove items from this file, intellisense might break.
 
 ### C++ ###
 # Prerequisites
@@ -60,7 +59,6 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-replay_pid*
 
 ### Linux ###
 *~
@@ -86,7 +84,6 @@ replay_pid*
 # Icon must end with two \r
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -106,39 +103,16 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-### macOS Patch ###
-# iCloud generated files
-*.icloud
-
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-!.vscode/*.code-snippets
-
-# Local History for Visual Studio Code
-.history/
-
-# Built Visual Studio Code Extensions
-*.vsix
-
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-.ionide
-
-# Support for Project snippet scope
-.vscode/*.code-snippets
-
-# Ignore code-workspaces
-*.code-workspace
 
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
-Thumbs.db:encryptable
 ehthumbs.db
 ehthumbs_vista.db
 
@@ -163,8 +137,7 @@ $RECYCLE.BIN/
 
 ### Gradle ###
 .gradle
-**/build/
-!src/**/build/
+/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -172,16 +145,18 @@ gradle-app.setting
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 
-# Avoid ignore Gradle wrappper properties
-!gradle-wrapper.properties
-
 # Cache of project
 .gradletasknamecache
 
-# Eclipse Gradle plugin generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
 
-# End of https://www.toptal.com/developers/gitignore/api/c++,java,linux,macos,gradle,windows,visualstudiocode
+# # VS Code Specific Java Settings
+# DO NOT REMOVE .classpath and .project
+.classpath
+.project
+.settings/
+bin/
+
+# Simulation GUI and other tools window save file
+*-window.json
