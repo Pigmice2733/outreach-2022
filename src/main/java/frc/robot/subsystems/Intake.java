@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase {
   private final DoubleSolenoid solenoid;
 
   public Intake() {
-    solenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, IntakeConfig.solenoidPorts[0], IntakeConfig.solenoidPorts[1]);
+    solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConfig.solenoidPorts[0], IntakeConfig.solenoidPorts[1]);
   }
 
   public void Extend() {

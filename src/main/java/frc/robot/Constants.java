@@ -26,7 +26,7 @@ public final class Constants {
     }
 
     public static class IntakeConfig {
-        public static final int[] solenoidPorts = {0, 0};
+        public static final int[] solenoidPorts = {0, 1};
     }
 
     public static class ShooterConfig {

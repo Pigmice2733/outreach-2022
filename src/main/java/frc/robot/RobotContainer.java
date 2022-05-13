@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -23,7 +24,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain drivetrain;
+  //private final Drivetrain drivetrain;
+  private final Intake intake;
 
   private final Controls controls;
 
@@ -34,8 +36,8 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    drivetrain = new Drivetrain();
-
+    //drivetrain = new Drivetrain();
+    intake = new Intake();
 
     // Initalize controls and configure buttons
     driver = new XboxController(0);
@@ -43,7 +45,7 @@ public class RobotContainer {
     controls = new Controls(driver, operator);
     configureButtonBindings(driver, operator);
 
-    drivetrain.setDefaultCommand(new ArcadeDriveCommand(drivetrain, controls::getDriveSpeed, controls::getTurnSpeed));
+    //drivetrain.setDefaultCommand(new ArcadeDriveCommand(drivetrain, controls::getDriveSpeed, controls::getTurnSpeed));
   }
 
   /**
@@ -55,14 +57,17 @@ public class RobotContainer {
    */
   private void configureButtonBindings(XboxController driver, XboxController operator) {
     // Slow when driver A is held down
-    new JoystickButton(driver, Button.kA.value)
+    /*new JoystickButton(driver, Button.kA.value)
 				.whenPressed(drivetrain::slowSpeed)
 				.whenReleased(drivetrain::normalSpeed);
     
     // Boost speed when Y is held down
     new JoystickButton(driver, Button.kY.value)
 				.whenPressed(drivetrain::boostSpeed)
-				.whenReleased(drivetrain::slowSpeed);
+				.whenReleased(drivetrain::slowSpeed);*/
+
+    new JoystickButton(driver, Button.kA.value)
+				.whenPressed(intake::Toggle);
   }
 
   /**
