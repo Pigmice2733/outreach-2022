@@ -5,15 +5,18 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class ArcadeDriveCommand extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Drivetrain drivetrain;
-  private final double forwardSpeed, turnSpeed;
+  private final DoubleSupplier forwardSpeed, turnSpeed;
 
-  public ArcadeDriveCommand(Drivetrain drivetrain, double forwardSpeed, double turnSpeed) {
+  public ArcadeDriveCommand(Drivetrain drivetrain, DoubleSupplier forwardSpeed, DoubleSupplier turnSpeed) {
     this.drivetrain = drivetrain;
     this.forwardSpeed = forwardSpeed;
     this.turnSpeed = turnSpeed;
@@ -29,7 +32,7 @@ public class ArcadeDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.arcadeDrive(forwardSpeed, turnSpeed);
+    drivetrain.arcadeDrive(forwardSpeed.getAsDouble(), turnSpeed.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

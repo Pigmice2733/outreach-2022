@@ -8,28 +8,27 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DrivetrainConfig;
 
 public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightDrive, leftDrive, rightFollow, leftFollow;
-  private double speedFactor;
+  private double speedFactor = 0.6;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
-    rightDrive = new CANSparkMax(0, MotorType.kBrushless);
+    rightDrive = new CANSparkMax(DrivetrainConfig.frontRightMotorPort, MotorType.kBrushless);
     rightDrive.restoreFactoryDefaults();
 
-    leftDrive = new CANSparkMax(1, MotorType.kBrushless);
+    leftDrive = new CANSparkMax(DrivetrainConfig.frontLeftMotorPort, MotorType.kBrushless);
     leftDrive.restoreFactoryDefaults();
 
-    rightFollow = new CANSparkMax(2, MotorType.kBrushless);
+    rightFollow = new CANSparkMax(DrivetrainConfig.backRightMotorPort, MotorType.kBrushless);
     rightFollow.restoreFactoryDefaults();
     rightFollow.follow(rightDrive);
 
-    leftFollow = new CANSparkMax(3, MotorType.kBrushless);
+    leftFollow = new CANSparkMax(DrivetrainConfig.backLeftMotorPort, MotorType.kBrushless);
     leftFollow.restoreFactoryDefaults();
     leftFollow.follow(leftDrive);
-
-    speedFactor = 0.6;
   }
 
   @Override
