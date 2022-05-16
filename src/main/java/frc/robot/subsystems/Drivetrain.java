@@ -4,15 +4,23 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConfig;
 
 public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightDrive, leftDrive, rightFollow, leftFollow;
   private double speedFactor = 0.6;
+
+  private double leftPosition, rightPosition, heading; // heading in degrees
+  private AHRS navx;
+  private DifferentialDriveOdometry odometry;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -29,11 +37,21 @@ public class Drivetrain extends SubsystemBase {
     leftFollow = new CANSparkMax(DrivetrainConfig.backLeftMotorPort, MotorType.kBrushless);
     leftFollow.restoreFactoryDefaults();
     leftFollow.follow(leftDrive);
+
+    odometry = new DifferentialDriveOdometry(new Rotation2d(0));
+    navx = new AHRS(DrivetrainConfig.navxPort);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    this.getPose();
+    // from updateInputs
+    leftPosition = rotationsToDistance(leftDrive.getEncoder().getPosition());
+    rightPosition = rotationsToDistance(rightDrive.getEncoder().getPosition());
+
+    updateHeading();
+
+    odometry.update(navx.getRotation2d(), leftPosition, rightPosition);
   }
 
   public void boostSpeed() {
@@ -96,5 +114,40 @@ public class Drivetrain extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
     this.periodic();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+      resetEncoders();
+      Rotation2d rotation = navx.getRotation2d();
+      odometry.resetPosition(pose, rotation);
+  }
+
+  public void resetEncoders() {
+    leftDrive.getEncoder().setPosition(0);
+    rightDrive.getEncoder().setPosition(0);
+  }
+
+  public void zeroHeading() {
+      this.navx.reset();
+      updateHeading();
+  }
+
+  public void updateHeading() {
+    double headingDegrees = navx.getAngle();
+
+    heading = headingDegrees;
+  }
+
+  public double getHeading() {
+    return heading;
+  }
+
+  public Pose2d getPose() {
+    System.out.println(odometry.getPoseMeters());
+    return odometry.getPoseMeters();
+  }
+
+  public double rotationsToDistance(double rotations) {
+    return rotations * Math.PI * DrivetrainConfig.wheelDiameterMeters / DrivetrainConfig.gearRatio;
   }
 }

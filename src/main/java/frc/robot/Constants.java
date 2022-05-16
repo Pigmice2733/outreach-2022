@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.SPI;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -23,6 +26,12 @@ public final class Constants {
         public static final double turnSpeed = 0.2;
 
         public static final double axisThreshold = 0.1;
+
+        public static final SPI.Port navxPort = SPI.Port.kMXP;
+        
+        public static final double wheelDiameterMeters = Units.inchesToMeters(4);
+        public static final double gearRatio = 7.5833; // 3 motor rotations to 1 wheel rotation
+        public static final double rotationToDistanceConversion = (Math.PI * wheelDiameterMeters) / gearRatio; //
     }
 
     public static class IntakeConfig {
