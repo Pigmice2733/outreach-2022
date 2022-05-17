@@ -7,37 +7,37 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import frc.robot.subsystems.*;
+
 /**
  * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * Command-based is a "declarative" paradigm, very little robot logic
+ * should actually be handled in the {@link Robot} periodic methods
+ * (other than the scheduler calls). Instead, the structure of the robot
+ * (including subsystems, commands, and button mappings) should be
+ * declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //private final Drivetrain drivetrain;
+  // private final Drivetrain drivetrain;
   private final Intake intake;
+  private final Shooter shooter;
 
   private final Controls controls;
 
   private XboxController driver;
-	private XboxController operator;
+  private XboxController operator;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    //drivetrain = new Drivetrain();
+    // drivetrain = new Drivetrain();
     intake = new Intake();
+    shooter = new Shooter();
 
     // Initalize controls and configure buttons
     driver = new XboxController(0);
@@ -45,29 +45,40 @@ public class RobotContainer {
     controls = new Controls(driver, operator);
     configureButtonBindings(driver, operator);
 
-    //drivetrain.setDefaultCommand(new ArcadeDriveCommand(drivetrain, controls::getDriveSpeed, controls::getTurnSpeed));
+    // drivetrain.setDefaultCommand(new ArcadeDriveCommand(drivetrain,
+    // controls::getDriveSpeed, controls::getTurnSpeed));
   }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-   * it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link JoystickButton}.
    */
   private void configureButtonBindings(XboxController driver, XboxController operator) {
     // Slow when driver A is held down
-    /*new JoystickButton(driver, Button.kA.value)
-				.whenPressed(drivetrain::slowSpeed)
-				.whenReleased(drivetrain::normalSpeed);
-    
-    // Boost speed when Y is held down
-    new JoystickButton(driver, Button.kY.value)
-				.whenPressed(drivetrain::boostSpeed)
-				.whenReleased(drivetrain::slowSpeed);*/
+    /*
+     * new JoystickButton(driver, Button.kA.value)
+     * .whenPressed(drivetrain::slowSpeed)
+     * .whenReleased(drivetrain::normalSpeed);
+     * 
+     * // Boost speed when Y is held down
+     * new JoystickButton(driver, Button.kY.value)
+     * .whenPressed(drivetrain::boostSpeed)
+     * .whenReleased(drivetrain::normalSpeed);
+     */
 
-    new JoystickButton(driver, Button.kA.value)
-				.whenPressed(intake::Toggle);
+    // toggle intake with operator A
+    new JoystickButton(operator, Button.kA.value)
+        .whenPressed(intake::toggle);
+
+    // disable intake with operator B
+    new JoystickButton(operator, Button.kB.value)
+        .whenPressed(intake::off);
+
+    // toggle shooter with operator X
+    new JoystickButton(operator, Button.kX.value)
+        .whenPressed(shooter::toggleEnabled);
   }
 
   /**

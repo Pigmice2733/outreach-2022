@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.IntakeConfig;
 import frc.robot.Constants.ShooterConfig;
 
@@ -17,19 +18,28 @@ public class Intake extends SubsystemBase {
   private final DoubleSolenoid solenoid;
 
   public Intake() {
-    solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConfig.solenoidPorts[0], IntakeConfig.solenoidPorts[1]);
+    solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConfig.solenoidPorts[0],
+        IntakeConfig.solenoidPorts[1]);
   }
 
-  public void Extend() {
+  public void extend() {
     solenoid.set(Value.kForward);
-  } 
+  }
 
-  public void Retract() {
+  public void retract() {
     solenoid.set(Value.kReverse);
   }
 
-  public void Toggle() {
+  public void off() {
+    solenoid.set(Value.kOff);
+  }
+
+  public void toggle() {
     solenoid.set(solenoid.get() == Value.kForward ? Value.kReverse : Value.kForward);
+  }
+
+  public Value getValue() {
+    return solenoid.get();
   }
 
   @Override
