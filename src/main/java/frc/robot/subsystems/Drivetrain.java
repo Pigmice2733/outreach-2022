@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConfig;
@@ -146,6 +147,14 @@ public class Drivetrain extends SubsystemBase {
     System.out.println(odometry.getPoseMeters());
     return odometry.getPoseMeters();
   }
+
+  public double getDistanceFromStart() {
+    Transform2d displacement = this.getPose().minus(new Pose2d(0, 0, new Rotation2d(0)));
+    double distance = Math.sqrt(displacement.getX() * displacement.getX() + displacement.getY() * displacement.getY());
+    
+    //System.out.println("Distance from start: " + distance);
+    return distance;
+}
 
   public double rotationsToDistance(double rotations) {
     return rotations * Math.PI * DrivetrainConfig.wheelDiameterMeters / DrivetrainConfig.gearRatio;

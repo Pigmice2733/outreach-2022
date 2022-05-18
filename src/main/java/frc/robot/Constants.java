@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -40,6 +42,7 @@ public final class Constants {
 
 	public static class IntakeConfig {
 		public static final int[] solenoidPorts = { 0, 1 };
+		public static final Value defultSolenoidState = Value.kReverse;
 	}
 
 	public static class ShooterConfig {

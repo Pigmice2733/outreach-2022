@@ -70,11 +70,11 @@ public class RobotContainer {
 
     // toggle intake with operator A
     new JoystickButton(operator, Button.kA.value)
-        .whenPressed(intake::toggle);
+        .whenPressed(intake::toggleSolenoid);
 
     // disable intake with operator B
     new JoystickButton(operator, Button.kB.value)
-        .whenPressed(intake::off);
+        .whenPressed(intake::disableSolenoid);
 
     // toggle shooter with operator X
     new JoystickButton(operator, Button.kX.value)

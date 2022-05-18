@@ -20,25 +20,27 @@ public class Intake extends SubsystemBase {
   public Intake() {
     solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConfig.solenoidPorts[0],
         IntakeConfig.solenoidPorts[1]);
+    
+    solenoid.set(IntakeConfig.defultSolenoidState);
   }
 
-  public void extend() {
+  public void extendSolenoid() {
     solenoid.set(Value.kForward);
   }
 
-  public void retract() {
+  public void retractSolenoid() {
     solenoid.set(Value.kReverse);
   }
 
-  public void off() {
+  public void disableSolenoid() {
     solenoid.set(Value.kOff);
   }
 
-  public void toggle() {
+  public void toggleSolenoid() {
     solenoid.set(solenoid.get() == Value.kForward ? Value.kReverse : Value.kForward);
   }
 
-  public Value getValue() {
+  public Value getSolenoidState() {
     return solenoid.get();
   }
 
