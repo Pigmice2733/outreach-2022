@@ -24,9 +24,9 @@ import edu.wpi.first.wpilibj.SPI;
 public final class Constants {
 	public static class DrivetrainConfig {
 		public static final int frontRightMotorPort = 0;
-		public static final int frontLeftMotorPort = 0;
-		public static final int backRightMotorPort = 0;
-		public static final int backLeftMotorPort = 0;
+		public static final int frontLeftMotorPort = 1;
+		public static final int backRightMotorPort = 2;
+		public static final int backLeftMotorPort = 3;
 
 		public static final double driveSpeed = 0.2;
 		public static final double turnSpeed = 0.2;
@@ -43,6 +43,8 @@ public final class Constants {
 	public static class IntakeConfig {
 		public static final int[] solenoidPorts = { 0, 1 };
 		public static final Value defultSolenoidState = Value.kReverse;
+		public static final int motorPort = 2;
+		public static final double motorSpeed = 0.5;
 	}
 
 	public static class ShooterConfig {
