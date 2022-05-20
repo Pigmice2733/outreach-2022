@@ -49,7 +49,8 @@ public final class Constants {
 
 	public static class ShooterConfig {
 		public static final int motorPort = 0;
-		public static final double motorOutputPercent = 0.5;
+		public static final int maxRpm = 9000;
+		public static final double motorKP = 0.9;
 	}
 
 	public static class VariableHoodConfig {
