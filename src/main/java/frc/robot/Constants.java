@@ -51,4 +51,12 @@ public final class Constants {
 		public static final int motorPort = 0;
 		public static final double motorOutputPercent = 0.5;
 	}
+
+	public static class VariableHoodConfig {
+		public static final int motorPort = 0;
+		public static final double kP = 0;
+		public static final double kI = 0;
+		public static final double kD = 0;
+		public static final double motorGearRatio = 3;
+	}
 }

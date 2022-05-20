@@ -56,6 +56,8 @@ public class RobotContainer {
    * passing it to a {@link JoystickButton}.
    */
   private void configureButtonBindings(XboxController driver, XboxController operator) {
+    // ALL CONTORLS ARE TEMPORARY UNTIL WE MEET WITH DRIVETEAM
+
     // Slow when driver A is held down
     /*
      * new JoystickButton(driver, Button.kA.value)
