@@ -41,10 +41,12 @@ public final class Constants {
 	}
 
 	public static class IntakeConfig {
-		public static final int[] solenoidPorts = { 0, 1 };
+		public static final int[] solenoidPorts = { 0, 1, 2, 3 };
 		public static final Value defultSolenoidState = Value.kReverse;
-		public static final int motorPort = 2;
-		public static final double motorSpeed = 0.5;
+		public static final int indexerPort = 2;
+		public static final int intakePort = 3;
+		public static final double indexerMotorSpeed = 0.5;
+		public static final double intakeMotorSpeed = 0.5;
 	}
 
 	public static class ShooterConfig {

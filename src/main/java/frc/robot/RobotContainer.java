@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import frc.robot.commands.Intake.ToggleIntake;
 import frc.robot.subsystems.*;
 
 /**
@@ -72,7 +72,7 @@ public class RobotContainer {
 
     // toggle intake with operator A
     new JoystickButton(operator, Button.kA.value)
-        .whenPressed(intake::toggle);
+        .whenPressed(new ToggleIntake(intake));
 
     // disable intake with operator B
     new JoystickButton(operator, Button.kB.value)

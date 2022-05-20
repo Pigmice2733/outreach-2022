@@ -15,17 +15,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConfig;
 
 public class Intake extends SubsystemBase {
-  private final DoubleSolenoid solenoid;
-  private final CANSparkMax motor;
+  private final DoubleSolenoid leftPiston, rightPiston;
+  private final CANSparkMax intakeMotor, indexerMotor;
   private boolean enabled, extended, prevExtended;
+  /*
+   * Extended means the intake system is extended,
+   * which actually means the pistons are retracted.
+   */
 
   public Intake() {
-    solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConfig.solenoidPorts[0],
+    leftPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConfig.solenoidPorts[0],
         IntakeConfig.solenoidPorts[1]);
-    solenoid.set(Value.kOff);
+    leftPiston.set(Value.kOff);
+    rightPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConfig.solenoidPorts[2],
+        IntakeConfig.solenoidPorts[3]);
+    rightPiston.set(Value.kOff);
 
-    motor = new CANSparkMax(IntakeConfig.motorPort, MotorType.kBrushless);
-    motor.restoreFactoryDefaults();
+    indexerMotor = new CANSparkMax(IntakeConfig.indexerPort, MotorType.kBrushless);
+    indexerMotor.restoreFactoryDefaults();
+    intakeMotor = new CANSparkMax(IntakeConfig.intakePort, MotorType.kBrushless);
+    intakeMotor.restoreFactoryDefaults();
 
     enabled = extended = false;
   }
@@ -49,20 +58,6 @@ public class Intake extends SubsystemBase {
    * }
    */
 
-  public void enable() {
-    this.enabled = true;
-  }
-
-  public void disable() {
-    this.enabled = false;
-    solenoid.set(Value.kOff);
-    motor.stopMotor();
-  }
-
-  public void toggleEnabled() {
-    this.enabled = !enabled;
-  }
-
   @Override
   public void periodic() {
     if (!enabled) {
@@ -71,15 +66,42 @@ public class Intake extends SubsystemBase {
 
     if (prevExtended != extended) {
       if (extended) {
-        solenoid.set(Value.kForward);
+        leftPiston.set(Value.kReverse);
+        rightPiston.set(Value.kReverse);
       } else {
-        solenoid.set(Value.kReverse);
+        leftPiston.set(Value.kForward);
+        rightPiston.set(Value.kForward);
       }
     }
 
     if (extended) {
-      motor.set(IntakeConfig.motorSpeed);
+      intakeMotor.set(IntakeConfig.intakeMotorSpeed);
+      indexerMotor.set(IntakeConfig.indexerMotorSpeed);
     }
+  }
+
+  public void enable() {
+    this.enabled = true;
+  }
+
+  public void disable() {
+    this.enabled = false;
+    leftPiston.set(Value.kOff);
+    rightPiston.set(Value.kOff);
+    intakeMotor.stopMotor();
+    indexerMotor.stopMotor();
+  }
+
+  public void toggleEnabled() {
+    if (this.enabled) {
+      this.disable();
+    } else {
+      this.enable();
+    }
+  }
+
+  public boolean isEnabled() {
+    return this.enabled;
   }
 
   public void extend() {
@@ -92,7 +114,7 @@ public class Intake extends SubsystemBase {
     extended = false;
   }
 
-  public void toggle() {
+  public void toggleExtension() {
     this.prevExtended = this.extended;
     extended = extended ? false : true;
   }
