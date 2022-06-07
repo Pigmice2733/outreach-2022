@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Intake.ToggleIntake;
+import frc.robot.commands.intake.ToggleIntake;
 import frc.robot.subsystems.*;
 
 /**
@@ -78,7 +78,7 @@ public class RobotContainer {
 
     // toggle shooter with operator X
     new JoystickButton(operator, Button.kX.value)
-        .whenPressed(shooter::enable);
+        .whenPressed(shooter::toggleEnabled);
   }
 
   /**

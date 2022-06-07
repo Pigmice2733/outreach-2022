@@ -1,4 +1,4 @@
-package frc.robot.commands.Intake;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
@@ -21,7 +21,7 @@ public class ToggleIntake extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        if (intake.isEnabled()) {
+        if (interrupted && intake.isEnabled()) {
             intake.disable();
         }
     }
@@ -29,6 +29,6 @@ public class ToggleIntake extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return true;
+        return intake.whileExtending();
     }
 }

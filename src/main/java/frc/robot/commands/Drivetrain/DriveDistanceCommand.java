@@ -1,4 +1,4 @@
-package frc.robot.commands.Drivetrain;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -20,7 +20,7 @@ public class DriveDistanceCommand extends ProfiledPIDCommand {
                 (output, setpoint) -> {
                     SmartDashboard.putNumber("Distance", drivetrain.getDistanceFromStart());
                     output = MathUtil.clamp(output, -0.40, 0.40);
-                    drivetrain.arcadeDrive(output * (distance < 0 ? -1 : 1), 0);
+                    drivetrain.arcadeDrive(output * (Math.signum(distance)), 0);
                 },
                 drivetrain);
 
@@ -33,7 +33,7 @@ public class DriveDistanceCommand extends ProfiledPIDCommand {
 
     @Override
     public void initialize() {
-        //this.drivetrain.resetPose();
+        // this.drivetrain.resetPose();
     }
 
     @Override

@@ -72,6 +72,7 @@ public class Intake extends SubsystemBase {
         leftPiston.set(Value.kForward);
         rightPiston.set(Value.kForward);
       }
+      prevExtended = extended;
     }
 
     if (extended) {
@@ -105,17 +106,24 @@ public class Intake extends SubsystemBase {
   }
 
   public void extend() {
-    this.prevExtended = this.extended;
-    extended = true;
+    this.extended = true;
   }
 
   public void retract() {
-    this.prevExtended = this.extended;
-    extended = false;
+    this.extended = false;
   }
 
   public void toggleExtension() {
-    this.prevExtended = this.extended;
-    extended = extended ? false : true;
+    this.extended = extended ? false : true;
+  }
+
+  /**
+   * Returns true if the boolean values {@code prevExtended} and
+   * {@code extended} are unequal; i.e., if the subsystem has been instructed
+   * to extend or retract but has not yet acted to effect that instruction.
+   * Returns false otherwise, while the extension system is at rest.
+   */
+  public boolean whileExtending() {
+    return this.prevExtended != this.extended;
   }
 }

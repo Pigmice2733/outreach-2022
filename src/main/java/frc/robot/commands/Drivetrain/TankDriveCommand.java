@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Drivetrain;
+package frc.robot.commands.drivetrain;
 
 import frc.robot.subsystems.Drivetrain;
 
@@ -22,6 +22,10 @@ public class TankDriveCommand extends CommandBase {
     this.rightSpeed = rightSpeed;
 
     addRequirements(drivetrain);
+  }
+
+  public TankDriveCommand(Drivetrain drivetrain, double leftSpeed, double rightSpeed) {
+    this(drivetrain, () -> leftSpeed, () -> rightSpeed);
   }
 
   // Called when the command is initially scheduled.
